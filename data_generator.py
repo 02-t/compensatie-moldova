@@ -25,3 +25,24 @@ def generate_data():
         file.write(data + '\n')
 
 
+def generate_full_data():
+    file = open('data.csv', 'w', encoding='utf-8')
+    file.write(header + '\n')
+
+    for vdae in range (1, 101):
+        for cerpa in range (1, 21):
+            name = f'familie{str(vdae)}-{str(cerpa)}'
+
+            VDAE = vdae*1000
+            CERPA = cerpa*1000
+
+
+            VGL = random.randint(VDAE, VDAE * 2)
+            MCF = random.randint(VDAE, VGL) - VDAE
+            RLCI = VGL - MCF - VDAE
+
+            data = f'{name},{VGL},{MCF},{RLCI},{CERPA}'
+
+            print(data)
+
+            file.write(data + '\n')
