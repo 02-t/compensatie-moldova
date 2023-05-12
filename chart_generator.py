@@ -6,16 +6,14 @@ import locale
 
 locale.setlocale(locale.LC_ALL, '')
 
-df = pd.read_csv('data.csv')
-df = df.dropna()
-
 
 def format_tick(value, _):
     return '{:,.0f}'.format(value)
 
 
 def run_chart():
-    global df
+    df = pd.read_csv('data.csv')
+    df = df.dropna()
 
     title_x = "VDAE (venitul disponibil pentru achitarea energiei)"
     title_y = "CERPA (costul energiei in perioada rece a anului)"
@@ -23,8 +21,8 @@ def run_chart():
     max_x = 100000
     max_y = 20000
 
-    df['VDAE'] = ((df['VGL'] - df['MCF'] - df['RLCI']) / 100000) * 100
-    df['CERPA'] = (df['CERPA'] / 20000) * 100
+    df['VDAE'] = ((df['VGL'] - df['MCF'] - df['RLCI']) / max_x) * 100
+    df['CERPA'] = (df['CERPA'] / max_y) * 100
 
     sns.set_style('whitegrid')
     sns.scatterplot(data=df, x='VDAE', y='CERPA', color='red')
@@ -46,6 +44,3 @@ def run_chart():
     gca.yaxis.set_major_formatter(ticker.FuncFormatter(format_tick))
 
     plt.show()
-
-
-run_chart()
